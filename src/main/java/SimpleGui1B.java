@@ -3,8 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SimpleGui1B implements ActionListener {
+public class SimpleGui1B {
     JFrame frame;
+    JLabel label;
     MyDrawPanel draw = new MyDrawPanel();
     public static void main(String[] args) {
         SimpleGui1B gui = new SimpleGui1B();
@@ -15,17 +16,33 @@ public class SimpleGui1B implements ActionListener {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton button = new JButton("Change colors");
-        button.addActionListener(this);
+        JButton colorButton = new JButton("Change colors");
+        colorButton.addActionListener(new ColorListener());
 
+        JButton labelButton = new JButton("Change label");
+        labelButton.addActionListener(new LabelListener());
+
+        label = new JLabel("label");
         MyDrawPanel draw = new MyDrawPanel();
 
-        frame.getContentPane().add(BorderLayout.SOUTH, button);
+        frame.getContentPane().add(BorderLayout.SOUTH, colorButton);
         frame.getContentPane().add(BorderLayout.CENTER, draw);
+        frame.getContentPane().add(BorderLayout.EAST, labelButton);
+        frame.getContentPane().add(BorderLayout.WEST, label);
+
         frame.setSize(300, 300);
         frame.setVisible(true);
     }
-    public void actionPerformed(ActionEvent event) {
-        frame.repaint();
+
+    class LabelListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            label.setText("Boom!");
+        }
+    }
+
+    class ColorListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            frame.repaint();
+        }
     }
 }
